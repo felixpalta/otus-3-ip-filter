@@ -56,9 +56,9 @@ int GetVersion() {
     return PROJECT_VERSION_PATCH;
 }
 
-bool IpAddrCompare(const IpAddr & a, const IpAddr & b)
+bool IpAddrCompare(const IpAddr & a, const IpAddr & b, SortType sortType)
 {
-    return a >= b;
+    return (sortType == SortType::ASCENDING) ? a < b :  a >= b;
 }
 
 } // otus

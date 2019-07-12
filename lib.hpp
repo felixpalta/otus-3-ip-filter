@@ -22,7 +22,13 @@ IpAddr IpAddrFromString(const std::string & str);
 // {"113", "162", "145", "56"} -> ("113.162.145.156")
 std::string IpAddrToString(const IpAddr & ip);
 
-bool IpAddrCompare(const IpAddr & a, const IpAddr & b);
+enum class SortType
+{
+    ASCENDING,
+    DESCENDING
+};
+
+bool IpAddrCompare(const IpAddr & a, const IpAddr & b, SortType sortType = SortType::DESCENDING);
 
 int GetVersion();
 
