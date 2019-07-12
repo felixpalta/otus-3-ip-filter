@@ -22,6 +22,7 @@ add_executable(tests_default tests_default.cpp)
 set_target_properties(ip_filter ip_filter_lib tests_default PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
 )
 target_include_directories(ip_filter_lib
     PRIVATE "${CMAKE_BINARY_DIR}"
