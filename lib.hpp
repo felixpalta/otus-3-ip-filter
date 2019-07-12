@@ -13,7 +13,7 @@ namespace otus {
 // ("11.22", '.') -> ["11", "22"]
 std::vector<std::string> Split(const std::string & str, char d);
 
-using IpAddr = std::tuple<std::string, std::string, std::string, std::string>;
+using IpAddr = std::tuple<int, int, int, int>;
 
 // ("113.162.145.156") -> {"113", "162", "145", "56"}
 // Throws std::exception if failed to parse input string

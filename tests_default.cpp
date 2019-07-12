@@ -35,13 +35,11 @@ TEST(DefaultTests, TestIpAddrParse) {
         otus::IpAddr parsed;
     };
     const std::vector<TestData> testData = {
-        {"0.0.0.0", otus::IpAddr{"0", "0", "0", "0"}},
-        {"113.162.145.156", otus::IpAddr{"113", "162", "145", "156"}},
-        {"foo.bar.baz.bak", otus::IpAddr{"foo", "bar", "baz", "bak"}}
+        {"0.0.0.0", otus::IpAddr{0, 0, 0, 0}},
+        {"113.162.145.156", otus::IpAddr{113, 162, 145, 156}}
     };
 
     for (const auto & td: testData) {
-        ASSERT_NO_THROW(otus::IpAddrFromString(td.raw));
         ASSERT_EQ(otus::IpAddrFromString(td.raw), td.parsed);
         ASSERT_EQ(otus::IpAddrToString(td.parsed), td.raw);
     }
@@ -49,4 +47,5 @@ TEST(DefaultTests, TestIpAddrParse) {
     ASSERT_THROW(otus::IpAddrFromString("113"), std::invalid_argument);
     ASSERT_THROW(otus::IpAddrFromString("113."), std::invalid_argument);
     ASSERT_THROW(otus::IpAddrFromString("113.162.145.156.999"), std::invalid_argument);
+    ASSERT_THROW(otus::IpAddrFromString("foo.bar.baz.bak"), std::invalid_argument);
 }
