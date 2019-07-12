@@ -5,19 +5,28 @@
 
 using IpPool = std::vector<otus::IpAddr>;
 
-void ReadIpPool(std::istream & is, IpPool & ipPool)
+void ReadIpPool(std::istream & is, IpPool & ip_pool)
 {
     for(std::string line; std::getline(is, line);)
     {
         std::vector<std::string> v = otus::Split(line, '\t');
-        ipPool.emplace_back(otus::IpAddrFromString(v.at(0)));
+        ip_pool.emplace_back(otus::IpAddrFromString(v.at(0)));
     }
 }
 
-void WriteIpPool(std::ostream & os, const IpPool & ipPool)
+void WriteIpPool(std::ostream & os, const IpPool & ip_pool)
 {
-    for (const auto & ip : ipPool) {
+    for (const auto & ip : ip_pool) {
         os << ip << std::endl;
+    }
+}
+
+template <typename Cond>
+void WritePoolCondtitional(std::ostream & os, const IpPool & ip_pool, Cond cond)
+{
+    for (const auto & ip : ip_pool) {
+        if (cond(ip))
+            os << ip << std::endl;
     }
 }
 
@@ -32,15 +41,25 @@ int main(int argc, const char *argv[])
 
     try
     {
-        IpPool ipPool;
-        ReadIpPool(std::cin, ipPool);
+        IpPool ip_pool;
+        ReadIpPool(std::cin, ip_pool);
 
-        std::sort(ipPool.begin(),
-                  ipPool.end(),
+        std::sort(ip_pool.begin(),
+                  ip_pool.end(),
                   [](const auto & a, const auto & b){ return otus::IpAddrCompare(otus::SortType::DESCENDING, a, b);}
         );
 
-        WriteIpPool(std::cout, ipPool);
+
+        auto filter1 = [](const auto & ip) { return std::get<0>(ip) == 1;};
+        auto filter2 = [](const auto & ip) { return std::get<0>(ip) == 46 && std::get<1>(ip) == 70;};
+        auto filter3 = [](const auto & ip) {
+            return std::get<0>(ip) == 46 || std::get<1>(ip) == 46 || std::get<2>(ip) == 46 || std::get<3>(ip) == 46;
+        };
+
+        WriteIpPool(std::cout, ip_pool);
+        WritePoolCondtitional(std::cout, ip_pool, filter1);
+        WritePoolCondtitional(std::cout, ip_pool, filter2);
+        WritePoolCondtitional(std::cout, ip_pool, filter3);
     }
     catch(const std::exception & e)
     {

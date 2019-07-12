@@ -39,7 +39,7 @@ std::vector<std::string> Split(const std::string & str, char d)
 
 IpAddr IpAddrFromString(const std::string & str)
 {
-    std::vector<int> spl = impl::Split<int>(str, '.', [](auto && s) {return std::stoi(s); });
+    std::vector<int> spl = impl::Split<int>(str, '.', [](auto && s) { return std::stoi(s); });
     if (spl.size() != 4)
         throw std::invalid_argument("Failed to parse IpAddr from string");
     return std::tie(spl.at(0), spl.at(1), spl.at(2), spl.at(3));
