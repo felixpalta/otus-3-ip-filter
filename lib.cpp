@@ -30,6 +30,8 @@ IpAddr IpAddrFromString(const std::string & str)
 {
     IpAddr retval;
     std::vector<std::string> spl = Split(str, '.');
+    if (spl.size() != 4)
+        throw std::invalid_argument("Failed to parse IpAddr from string");
     return std::tie(spl.at(0), spl.at(1), spl.at(2), spl.at(3));
 }
 

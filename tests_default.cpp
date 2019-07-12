@@ -41,7 +41,12 @@ TEST(DefaultTests, TestIpAddrParse) {
     };
 
     for (const auto & td: testData) {
+        ASSERT_NO_THROW(otus::IpAddrFromString(td.raw));
         ASSERT_EQ(otus::IpAddrFromString(td.raw), td.parsed);
         ASSERT_EQ(otus::IpAddrToString(td.parsed), td.raw);
     }
+    ASSERT_THROW(otus::IpAddrFromString(""), std::invalid_argument);
+    ASSERT_THROW(otus::IpAddrFromString("113"), std::invalid_argument);
+    ASSERT_THROW(otus::IpAddrFromString("113."), std::invalid_argument);
+    ASSERT_THROW(otus::IpAddrFromString("113.162.145.156.999"), std::invalid_argument);
 }
