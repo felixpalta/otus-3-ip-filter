@@ -32,15 +32,15 @@ void WriteIpPoolCondtitional(std::ostream & os, const IpPool & ip_pool, Cond con
 
 int main(int argc, const char *argv[])
 {
-    if (argc > 1) {
-        if ("-v" == std::string(argv[1])) {
-            std::cerr << "Version: " << otus::GetVersion() << std::endl;
-            return 0;
-        }
-    }
-
     try
     {
+        if (argc > 1) {
+            if ("-v" == std::string(argv[1])) {
+                std::cerr << "Version: " << otus::GetVersion() << std::endl;
+                return 0;
+            }
+        }
+
         IpPool ip_pool;
         ReadIpPool(std::cin, ip_pool);
 
