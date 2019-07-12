@@ -75,7 +75,7 @@ TEST(DefaultTests, TestCompareIpAddr) {
         { IpAddr{222, 173, 200, 246}, IpAddr{222, 173, 235, 246}, false},
 
         { IpAddr{68, 46, 218, 208}, IpAddr{46, 251, 197, 23}, true},
-        { IpAddr{46, 251, 197, 23}, IpAddr{68, 46, 218, 208}, true},
+        { IpAddr{46, 251, 197, 23}, IpAddr{68, 46, 218, 208}, false},
 
     };
     for (const auto & td : testData) {
