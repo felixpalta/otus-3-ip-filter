@@ -1,3 +1,4 @@
+dist: xenial
 language: cpp
 before_script:
 - echo "Run before_script"
@@ -10,4 +11,4 @@ deploy:
     provider: script
     skip_cleanup: true
     script:
-    - true || curl -v --fail --show-error -T ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -ufelixpalta:$BINTRAY_API_KEY "https://api.bintray.com/content/felixpalta/otus-cpp-repo/ip_filter/$TRAVIS_BUILD_NUMBER/ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=stretch;deb_component=main;deb_architecture=amd64"
+    - curl -v --fail --show-error -T ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -ufelixpalta:$BINTRAY_API_KEY "https://api.bintray.com/content/felixpalta/otus-cpp-repo/ip_filter/$TRAVIS_BUILD_NUMBER/ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=stretch;deb_component=main;deb_architecture=amd64"
