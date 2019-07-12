@@ -6,6 +6,7 @@ TEST(DefaultTests,TestVersion) {
 }
 
 TEST(DefaultTests, TestSplit) {
+    using namespace otus;
     struct TestData
     {
         std::string instr;
@@ -24,28 +25,61 @@ TEST(DefaultTests, TestSplit) {
     };
 
     for (const auto & td : testData) {
-        ASSERT_EQ(otus::Split(td.instr, td.inchar), td.out);
+        ASSERT_EQ(Split(td.instr, td.inchar), td.out);
     }
 }
 
 TEST(DefaultTests, TestIpAddrParse) {
+    using namespace otus;
     struct TestData
     {
         std::string raw;
-        otus::IpAddr parsed;
+        IpAddr parsed;
     };
     const std::vector<TestData> testData = {
-        {"0.0.0.0", otus::IpAddr{0, 0, 0, 0}},
-        {"113.162.145.156", otus::IpAddr{113, 162, 145, 156}}
+        {"0.0.0.0", IpAddr{0, 0, 0, 0}},
+        {"113.162.145.156", IpAddr{113, 162, 145, 156}}
     };
 
     for (const auto & td: testData) {
-        ASSERT_EQ(otus::IpAddrFromString(td.raw), td.parsed);
-        ASSERT_EQ(otus::IpAddrToString(td.parsed), td.raw);
+        ASSERT_EQ(IpAddrFromString(td.raw), td.parsed);
+        ASSERT_EQ(IpAddrToString(td.parsed), td.raw);
     }
-    ASSERT_THROW(otus::IpAddrFromString(""), std::invalid_argument);
-    ASSERT_THROW(otus::IpAddrFromString("113"), std::invalid_argument);
-    ASSERT_THROW(otus::IpAddrFromString("113."), std::invalid_argument);
-    ASSERT_THROW(otus::IpAddrFromString("113.162.145.156.999"), std::invalid_argument);
-    ASSERT_THROW(otus::IpAddrFromString("foo.bar.baz.bak"), std::invalid_argument);
+    ASSERT_THROW(IpAddrFromString(""), std::invalid_argument);
+    ASSERT_THROW(IpAddrFromString("113"), std::invalid_argument);
+    ASSERT_THROW(IpAddrFromString("113."), std::invalid_argument);
+    ASSERT_THROW(IpAddrFromString("113.162.145.156.999"), std::invalid_argument);
+    ASSERT_THROW(IpAddrFromString("foo.bar.baz.bak"), std::invalid_argument);
 }
+
+TEST(DefaultTests, TestCompareIpAddr) {
+    using namespace otus;
+    struct TestData
+    {
+        IpAddr a, b;
+        bool compareResult;
+    };
+    const std::vector<TestData> testData = {
+        { IpAddr{0, 0, 0, 0}, IpAddr{0, 0, 0, 0}, true},
+
+        { IpAddr{0, 0, 0, 1}, IpAddr{0, 0, 0, 0}, true},
+        { IpAddr{0, 0, 0, 0}, IpAddr{0, 0, 0, 1}, false},
+
+        { IpAddr{250, 173, 235, 246}, IpAddr{222, 173, 235, 246}, true},
+        { IpAddr{222, 173, 235, 246}, IpAddr{250, 173, 235, 246}, false},
+
+        { IpAddr{222, 173, 235, 246}, IpAddr{222, 130, 177, 64}, true},
+        { IpAddr{222, 130, 177, 64}, IpAddr{222, 173, 235, 246}, false},
+
+        { IpAddr{222, 173, 235, 246}, IpAddr{222, 173, 200, 246}, true},
+        { IpAddr{222, 173, 200, 246}, IpAddr{222, 173, 235, 246}, false},
+
+        { IpAddr{68, 46, 218, 208}, IpAddr{46, 251, 197, 23}, true},
+        { IpAddr{46, 251, 197, 23}, IpAddr{68, 46, 218, 208}, true},
+
+    };
+    for (const auto & td : testData) {
+        ASSERT_EQ(td.compareResult, IpAddrCompare(td.a, td.b));
+    }
+}
+

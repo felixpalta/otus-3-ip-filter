@@ -56,6 +56,11 @@ int GetVersion() {
     return PROJECT_VERSION_PATCH;
 }
 
+bool IpAddrCompare(const IpAddr & /*a*/, const IpAddr & /*b*/)
+{
+    return false;
+}
+
 } // otus
 
 std::ostream & operator<<(std::ostream & os, const otus::IpAddr & ip)

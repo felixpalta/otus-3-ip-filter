@@ -33,11 +33,6 @@ int main(int argc, const char *argv[])
     {
         IpPool ipPool;
         ReadIpPool(std::cin, ipPool);
-
-//        auto IpAddrReverseLexicalCompare = [](const otus::IpAddr & a, const otus::IpAddr & b) {
-//            return  std::get<0>(a) > std::get<0>(b);
-//        };
-//        std::sort(ipPool.begin(), ipPool.end(), IpAddrReverseLexicalCompare);
         WriteIpPool(std::cout, ipPool);
     }
     catch(const std::exception &e)
