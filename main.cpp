@@ -1,34 +1,31 @@
 #include "lib.hpp"
 #include <iostream>
 
+using IpPool = std::vector<otus::IpAddr>;
+
+void ReadIpPool(std::istream & is, IpPool & ipPool)
+{
+    for(std::string line; std::getline(is, line);)
+    {
+        std::vector<std::string> v = otus::Split(line, '\t');
+        ipPool.emplace_back(otus::IpAddrFromString(v.at(0)));
+    }
+}
+
+void WriteIpPool(std::ostream & os, const IpPool & ipPool)
+{
+    for (const auto & ip : ipPool) {
+        os << ip << std::endl;
+    }
+}
+
 int main()
 {
     try
     {
-        std::vector<std::vector<std::string> > ip_pool;
-
-        for(std::string line; std::getline(std::cin, line);)
-        {
-            std::vector<std::string> v = otus::Split(line, '\t');
-            ip_pool.push_back(otus::Split(v.at(0), '.'));
-        }
-
-        // TODO reverse lexicographically sort
-
-        for(std::vector<std::vector<std::string> >::const_iterator ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-        {
-            for(std::vector<std::string>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-            {
-                if (ip_part != ip->cbegin())
-                {
-                    std::cout << ".";
-
-                }
-                std::cout << *ip_part;
-            }
-            std::cout << std::endl;
-        }
-
+        IpPool ipPool;
+        ReadIpPool(std::cin, ipPool);
+        WriteIpPool(std::cout, ipPool);
     }
     catch(const std::exception &e)
     {

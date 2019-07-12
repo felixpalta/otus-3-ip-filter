@@ -1,6 +1,5 @@
 #include "lib.hpp"
 #include "version.hpp"
-#include "tuple"
 
 namespace otus {
 
@@ -40,6 +39,12 @@ std::string IpAddrToString(const IpAddr & ip)
             + "." + std::get<1>(ip)
             + "." + std::get<2>(ip)
             + "." + std::get<3>(ip) ;
+}
+
+std::ostream & operator<<(std::ostream & os, const IpAddr & ip)
+{
+    os << IpAddrToString(ip);
+    return os;
 }
 
 } // otus
