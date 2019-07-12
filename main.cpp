@@ -19,8 +19,15 @@ void WriteIpPool(std::ostream & os, const IpPool & ipPool)
     }
 }
 
-int main()
+int main(int argc, const char *argv[])
 {
+    if (argc > 1) {
+        if ("-v" == std::string(argv[1])) {
+            std::cerr << "Version: " << otus::GetVersion() << std::endl;
+            return 0;
+        }
+    }
+
     try
     {
         IpPool ipPool;

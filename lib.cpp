@@ -41,10 +41,10 @@ std::string IpAddrToString(const IpAddr & ip)
             + "." + std::get<3>(ip) ;
 }
 
-std::ostream & operator<<(std::ostream & os, const IpAddr & ip)
+} // otus
+
+std::ostream & operator<<(std::ostream & os, const otus::IpAddr & ip)
 {
-    os << IpAddrToString(ip);
+    os << otus::IpAddrToString(ip);
     return os;
 }
-
-} // otus

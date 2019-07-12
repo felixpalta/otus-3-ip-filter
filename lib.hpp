@@ -21,9 +21,9 @@ IpAddr IpAddrFromString(const std::string & str);
 
 // {"113", "162", "145", "56"} -> ("113.162.145.156")
 std::string IpAddrToString(const IpAddr & ip);
-
-std::ostream & operator<<(std::ostream & os, const IpAddr & ip);
-
 int GetVersion();
 
 } // otus
+
+std::ostream & operator<<(std::ostream & os, const otus::IpAddr & ip);
+
