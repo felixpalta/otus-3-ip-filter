@@ -1,6 +1,6 @@
 #include "lib.hpp"
-
 #include "version.hpp"
+#include "tuple"
 
 namespace otus {
 
@@ -25,6 +25,21 @@ std::vector<std::string> Split(const std::string &str, char d)
     r.push_back(str.substr(start));
 
     return r;
+}
+
+IpAddr IpAddrFromString(const std::string & str)
+{
+    IpAddr retval;
+    std::vector<std::string> spl = Split(str, '.');
+    return std::tie(spl.at(0), spl.at(1), spl.at(2), spl.at(3));
+}
+
+std::string IpAddrToString(const IpAddr & ip)
+{
+    return std::get<0>(ip)
+            + "." + std::get<1>(ip)
+            + "." + std::get<2>(ip)
+            + "." + std::get<3>(ip) ;
 }
 
 } // otus

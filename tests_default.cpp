@@ -27,3 +27,21 @@ TEST(DefaultTests, TestSplit) {
         ASSERT_EQ(otus::Split(td.instr, td.inchar), td.out);
     }
 }
+
+TEST(DefaultTests, TestIpAddrParse) {
+    struct TestData
+    {
+        std::string raw;
+        otus::IpAddr parsed;
+    };
+    const std::vector<TestData> testData = {
+        {"0.0.0.0", otus::IpAddr{"0", "0", "0", "0"}},
+        {"113.162.145.156", otus::IpAddr{"113", "162", "145", "156"}},
+        {"foo.bar.baz.bak", otus::IpAddr{"foo", "bar", "baz", "bak"}}
+    };
+
+    for (const auto & td: testData) {
+        ASSERT_EQ(otus::IpAddrFromString(td.raw), td.parsed);
+        ASSERT_EQ(otus::IpAddrToString(td.parsed), td.raw);
+    }
+}
