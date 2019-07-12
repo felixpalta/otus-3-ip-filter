@@ -7,7 +7,7 @@ else()
     set(TRAVIS_BUILD_CMAKE_VAR 999)
 endif()
 
-project(MUH_PROJECT VERSION 0.0.${TRAVIS_BUILD_CMAKE_VAR})
+project(ip_filter VERSION 0.0.${TRAVIS_BUILD_CMAKE_VAR})
 
 message("Version ${PROJECT_VERSION_MAJOR} ${PROJECT_VERSION_MINOR} ${PROJECT_VERSION_PATCH}")
 
@@ -15,42 +15,42 @@ include(CMakeLists-GTest.cmake)
 
 configure_file(version.h.in version.hpp @ONLY)
 
-add_executable(MUH_PROJECT_cli "main.cpp")
-add_library(MUH_PROJECT "lib.cpp")
+add_executable(ip_filter "main.cpp")
+add_library(ip_filter_lib "lib.cpp")
 add_executable(tests_default tests_default.cpp)
 
-set_target_properties(MUH_PROJECT_cli MUH_PROJECT tests_default PROPERTIES
+set_target_properties(ip_filter ip_filter_lib tests_default PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
-target_include_directories(MUH_PROJECT
+target_include_directories(ip_filter_lib
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
-target_link_libraries(MUH_PROJECT_cli PRIVATE
-    MUH_PROJECT
+target_link_libraries(ip_filter PRIVATE
+    ip_filter_lib
 )
 target_link_libraries(tests_default 
     gtest_main
-    MUH_PROJECT
+    ip_filter_lib
 )
 
 if (MSVC)
-    target_compile_options(MUH_PROJECT_cli PRIVATE
+    target_compile_options(ip_filter PRIVATE
         /W4
     )
-    target_compile_options(MUH_PROJECT PRIVATE
+    target_compile_options(ip_filter_lib PRIVATE
         /W4
     )
 else ()
-    target_compile_options(MUH_PROJECT_cli PRIVATE
+    target_compile_options(ip_filter PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
-    target_compile_options(MUH_PROJECT PRIVATE
+    target_compile_options(ip_filter_lib PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
 endif()
 
-install(TARGETS MUH_PROJECT_cli RUNTIME DESTINATION bin)
+install(TARGETS ip_filter RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
