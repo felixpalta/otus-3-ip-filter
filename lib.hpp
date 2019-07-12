@@ -28,7 +28,7 @@ enum class SortType
     DESCENDING
 };
 
-bool IpAddrCompare(const IpAddr & a, const IpAddr & b, SortType sortType = SortType::DESCENDING);
+bool IpAddrCompare(SortType sortType, const IpAddr & a, const IpAddr & b);
 
 int GetVersion();
 

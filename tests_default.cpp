@@ -79,8 +79,8 @@ TEST(DefaultTests, TestCompareIpAddr) {
 
     };
     for (const auto & td : testData) {
-        ASSERT_EQ(td.compareResult, IpAddrCompare(td.a, td.b));
-        ASSERT_NE(td.compareResult, IpAddrCompare(td.a, td.b, SortType::ASCENDING));
+        ASSERT_EQ(td.compareResult, IpAddrCompare(SortType::DESCENDING, td.a, td.b));
+        ASSERT_NE(td.compareResult, IpAddrCompare(SortType::ASCENDING, td.a, td.b));
     }
 }
 
