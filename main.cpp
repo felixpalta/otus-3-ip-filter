@@ -22,7 +22,7 @@ void WriteIpPool(std::ostream & os, const IpPool & ip_pool)
 }
 
 template <typename Cond>
-void WritePoolCondtitional(std::ostream & os, const IpPool & ip_pool, Cond cond)
+void WriteIpPoolCondtitional(std::ostream & os, const IpPool & ip_pool, Cond cond)
 {
     for (const auto & ip : ip_pool) {
         if (cond(ip))
@@ -49,7 +49,6 @@ int main(int argc, const char *argv[])
                   [](const auto & a, const auto & b){ return otus::IpAddrCompare(otus::SortType::DESCENDING, a, b);}
         );
 
-
         auto filter1 = [](const auto & ip) { return std::get<0>(ip) == 1;};
         auto filter2 = [](const auto & ip) { return std::get<0>(ip) == 46 && std::get<1>(ip) == 70;};
         auto filter3 = [](const auto & ip) {
@@ -57,9 +56,9 @@ int main(int argc, const char *argv[])
         };
 
         WriteIpPool(std::cout, ip_pool);
-        WritePoolCondtitional(std::cout, ip_pool, filter1);
-        WritePoolCondtitional(std::cout, ip_pool, filter2);
-        WritePoolCondtitional(std::cout, ip_pool, filter3);
+        WriteIpPoolCondtitional(std::cout, ip_pool, filter1);
+        WriteIpPoolCondtitional(std::cout, ip_pool, filter2);
+        WriteIpPoolCondtitional(std::cout, ip_pool, filter3);
     }
     catch(const std::exception & e)
     {
